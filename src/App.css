@@ -1,0 +1,57 @@
+section {
+  padding: 2rem 0;
+}
+
+label {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px dotted black;
+  border-radius: 20px;
+  width: 10rem;
+  height: 10rem;
+  cursor: pointer;
+  font-size: large;
+}
+
+label span {
+  font-weight: lighter;
+  font-size: small;
+  padding-top: 0.5rem;
+
+}
+
+.custom-file-input {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-file-input input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.custom-file-input span {
+  z-index: 1;
+  display: block;
+  text-align: center;
+}
+
+.custom-file-input:hover {
+  background-color: #0056b3;
+}
