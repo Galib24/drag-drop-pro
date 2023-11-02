@@ -84,12 +84,15 @@ function App() {
         />
       </label>
       <p>Number of saved images: {savedImagesCount}</p>
+      {selectedImages.some((image) => image.selected) && (
+        <button className='btn bg-red-400' onClick={deleteSelectedImages}>Delete Selected Images</button>
+      )}
 
       <p>Number of images selected for deletion: {selectedForDeletionCount}</p>
-      <div className="images">
+      <div  className="images grid grid-cols-4">
         {selectedImages.map((image, index) => (
           <div key={index} className="image">
-            <img src={image.url} alt="" />
+            <img style={{width: '300px', height: '300px'}} src={image.url} alt="" />
             <input
               type="checkbox"
               checked={image.selected}
@@ -98,10 +101,6 @@ function App() {
           </div>
         ))}
       </div>
-
-      {selectedImages.some((image) => image.selected) && (
-        <button onClick={deleteSelectedImages}>Delete Selected Images</button>
-      )}
     </section>
   );
 }
