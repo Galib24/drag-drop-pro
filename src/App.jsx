@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [dates, setDates] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [savedImagesCount, setSavedImagesCount] = useState(0);
   const [selectedForDeletionCount, setSelectedForDeletionCount] = useState(0);
+
 
 
 
@@ -19,6 +21,12 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    fetch('data.json')
+      .then(res => res.json())
+      .then(data => setDates(data))
+  }, [])
+  console.log(dates);
   const onSelectFile = (e) => {
     const selectedFiles = e.target.files;
     const selectedFilesArray = Array.from(selectedFiles);
@@ -51,9 +59,6 @@ function App() {
   const deleteSelectedImages = () => {
     const updatedImages = selectedImages.filter((image) => !image.selected);
 
-
-
-
     // Update state with the remaining images
     setSelectedImages(updatedImages);
 
@@ -67,6 +72,18 @@ function App() {
     setSelectedForDeletionCount(0);
 
   };
+
+
+  const selectAndDeleteImagesFromDates = () => {
+    const updatedDates = dates.filter((picture) => !picture.selected);
+
+    // Update the 'dates' state with the remaining images
+    setDates(updatedDates);
+
+    // Update the selectedForDeletionCount
+    setSelectedForDeletionCount(0);
+  };
+
 
 
   return (
@@ -87,12 +104,17 @@ function App() {
       {selectedImages.some((image) => image.selected) && (
         <button className='btn bg-red-400' onClick={deleteSelectedImages}>Delete Selected Images</button>
       )}
+      {dates.some((picture) => picture.selected) && (
+        <button className='btn bg-red-400' onClick={selectAndDeleteImagesFromDates}>
+          Delete Selected Images from Dates
+        </button>
+      )}
 
       <p>Number of images selected for deletion: {selectedForDeletionCount}</p>
-      <div  className="images grid grid-cols-4">
+      <div className="images grid grid-cols-4">
         {selectedImages.map((image, index) => (
           <div key={index} className="image">
-            <img style={{width: '300px', height: '300px'}} src={image.url} alt="" />
+            <img style={{ width: '300px', height: '300px' }} src={image.url} alt="" />
             <input
               type="checkbox"
               checked={image.selected}
@@ -100,6 +122,24 @@ function App() {
             />
           </div>
         ))}
+
+        {dates?.map((picture) => {
+          return (
+            <div key={picture.id} className="image">
+              <img src={picture.url} alt="" />
+              <input
+                type="checkbox"
+                checked={picture.selected}
+                onChange={() => {
+                  // Toggle the selected state of the image
+                  picture.selected = !picture.selected;
+                  setDates([...dates]);
+                }}
+              />
+            </div>
+          );
+        })}
+
       </div>
     </section>
   );
