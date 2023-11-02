@@ -5,6 +5,9 @@ import './App.css';
 function App() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [savedImagesCount, setSavedImagesCount] = useState(0);
+  const [selectedForDeletionCount, setSelectedForDeletionCount] = useState(0);
+
+
 
   useEffect(() => {
     // When the component mounts, retrieve the selected images from local storage
@@ -38,10 +41,18 @@ function App() {
     const updatedImages = [...selectedImages];
     updatedImages[index].selected = !updatedImages[index].selected;
     setSelectedImages(updatedImages);
+
+    const selectedCount = updatedImages.filter((image) => image.selected).length;
+    setSelectedForDeletionCount(selectedCount);
+
+
   };
 
   const deleteSelectedImages = () => {
     const updatedImages = selectedImages.filter((image) => !image.selected);
+
+
+
 
     // Update state with the remaining images
     setSelectedImages(updatedImages);
@@ -51,7 +62,12 @@ function App() {
 
     // Update the saved images count
     setSavedImagesCount(updatedImages.length);
+
+    // Update the selectedForDeletionCount
+    setSelectedForDeletionCount(0);
+
   };
+
 
   return (
     <section>
@@ -69,6 +85,7 @@ function App() {
       </label>
       <p>Number of saved images: {savedImagesCount}</p>
 
+      <p>Number of images selected for deletion: {selectedForDeletionCount}</p>
       <div className="images">
         {selectedImages.map((image, index) => (
           <div key={index} className="image">
