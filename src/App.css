@@ -18,7 +18,7 @@ label {
 
 label span {
   font-weight: lighter;
-  font-size: small;
+  font-size: larger;
   padding-top: 0.5rem;
 
 }
@@ -27,11 +27,12 @@ label span {
   display: inline-block;
   position: relative;
   overflow: hidden;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #ffffff;
+  color: black;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
+  margin-left: 1px;
   transition: background-color 0.3s ease;
 }
 
@@ -53,7 +54,8 @@ label span {
 }
 
 .custom-file-input:hover {
-  background-color: #0056b3;
+  background-color: #3b83cf;
+  color: aqua;
 }
 
 
