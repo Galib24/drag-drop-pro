@@ -11,6 +11,7 @@ function App() {
 
 
 
+
   useEffect(() => {
     // When the component mounts, retrieve the selected images from local storage
     const storedImages = localStorage.getItem('selectedImages');
@@ -82,6 +83,7 @@ function App() {
 
     // Update the selectedForDeletionCount
     setSelectedForDeletionCount(0);
+    
   };
 
 
@@ -113,32 +115,50 @@ function App() {
       <p>Number of images selected for deletion: {selectedForDeletionCount}</p>
       <div className="images grid grid-cols-4">
         {selectedImages.map((image, index) => (
-          <div key={index} className="image">
-            <img style={{ width: '300px', height: '300px' }} src={image.url} alt="" />
+          <div key={index} className="relative group">
+            <img
+              
+              src={image.url}
+              alt=""
+              className="transition-opacity duration-300 ease-in-out group-hover:opacity-50 cursor-pointer"
+            />
             <input
               type="checkbox"
               checked={image.selected}
               onChange={() => toggleImageSelection(index)}
+              className="absolute top-2 right-2 hidden group-hover:block cursor-pointer"
             />
           </div>
         ))}
 
-        {dates?.map((picture) => {
-          return (
-            <div key={picture.id} className="image">
-              <img src={picture.url} alt="" />
-              <input
-                type="checkbox"
-                checked={picture.selected}
-                onChange={() => {
-                  // Toggle the selected state of the image
-                  picture.selected = !picture.selected;
-                  setDates([...dates]);
-                }}
-              />
-            </div>
-          );
-        })}
+        {dates?.map((picture) => (
+          <div
+            key={picture.id}
+            className={`relative group cursor-pointer ${picture.selected ? 'bg-white' : 'bg-white'
+              }`}
+          >
+            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity"></div>
+            <img
+              src={picture.url}
+              alt=""
+              className="transition-opacity duration-300 ease-in-out hover:opacity-50 w-full"
+            />
+            <input
+              type="checkbox"
+              checked={picture.selected}
+              onChange={() => {
+                // Toggle the selected state of the image
+                picture.selected = !picture.selected;
+                setDates([...dates]);
+
+              }}
+              className="absolute top-2 right-2 z-10 cursor-pointer"
+            />
+          </div>
+        ))}
+
+
+
 
       </div>
     </section>
