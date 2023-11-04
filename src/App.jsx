@@ -83,26 +83,16 @@ function App() {
 
     // Update the selectedForDeletionCount
     setSelectedForDeletionCount(0);
-    
+
   };
 
 
 
   return (
-    <section>
-      <label className="custom-file-input">
-        *Add Images
-        <br />
-        <span>Up to 10 images</span>
-        <input
-          type="file"
-          name="images"
-          onChange={onSelectFile}
-          multiple
-          accept="image/png, image/jpeg, image/webp"
-        />
-      </label>
-      <p>Number of saved images: {savedImagesCount}</p>
+    <section className='container  mt-8 ml-16 pr-48 pl-48   bg-gray-800'>
+
+      {/* <p>Number of saved images: {savedImagesCount}</p> */}
+      <div className='bg-red-500 w-auto h-10'> nav</div>
       {selectedImages.some((image) => image.selected) && (
         <button className='btn bg-red-400' onClick={deleteSelectedImages}>Delete Selected Images</button>
       )}
@@ -112,12 +102,11 @@ function App() {
         </button>
       )}
 
-      <p>Number of images selected for deletion: {selectedForDeletionCount}</p>
-      <div className="images grid grid-cols-4">
+      {/* <p>Number of images selected for deletion: {selectedForDeletionCount}</p> */}
+      <div className="images grid grid-cols-4 gap-2">
         {selectedImages.map((image, index) => (
-          <div key={index} className="relative group">
+          <div key={index} className="relative group" >
             <img
-              
               src={image.url}
               alt=""
               className="transition-opacity duration-300 ease-in-out group-hover:opacity-50 cursor-pointer"
@@ -131,11 +120,18 @@ function App() {
           </div>
         ))}
 
-        {dates?.map((picture) => (
+        {dates?.map((picture, index) => (
           <div
             key={picture.id}
-            className={`relative group cursor-pointer ${picture.selected ? 'bg-white' : 'bg-white'
-              }`}
+            className={`relative group cursor-pointer ${picture.selected ? 'bg-white' : 'bg-white'}`}
+            style={{ width: '150px', height: '150px',
+              ...(index === 0 ? { width: '280px', height: '280px', marginRight: '20px' } : {}), 
+              
+           
+            }
+            }
+            
+            
           >
             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity"></div>
             <img
@@ -150,19 +146,34 @@ function App() {
                 // Toggle the selected state of the image
                 picture.selected = !picture.selected;
                 setDates([...dates]);
-
               }}
               className="absolute top-2 right-2 z-10 cursor-pointer"
             />
           </div>
         ))}
 
-
-
-
+        <label style={{ width: '150px', height: '150px' }} className="custom-file-input">
+          *Add Images
+          <br />
+          <span>Up to 10 images</span>
+          <input
+            type="file"
+            name="images"
+            onChange={onSelectFile}
+            multiple
+            accept="image/png, image/jpeg, image/webp"
+          />
+        </label>
       </div>
+
+
     </section>
   );
 }
 
 export default App;
+
+
+
+
+// style={{ width: '200px', height: '200px', ...(index === 0 ? { width: '370px', height: '370px' } : {}) }}
