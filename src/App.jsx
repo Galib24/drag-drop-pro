@@ -135,27 +135,54 @@ function App() {
 
       {/* nav bar */}
       <div style={{ border: '1px solid black' }}
-        className='bg-white w-auto h-10 navbar overflow-clip '>
-        <div className='navbar-start'>
-          <input type="checkbox" className=" checkbox checkbox-sm mt-2 checkbox-info " disabled checked />
-          {selectedCount !== null && selectedCount > 0 && <p>{selectedCount} Files Selected </p>}
+        className='bg-white w-auto h-10 navbar overflow-hidden '>
+        <div className="navbar-center hidden lg:flex navbar">
+
+          <div className='navbar-start'>
+            <input type="checkbox" className=" checkbox checkbox-sm mt-2 checkbox-info " disabled checked />
+            {selectedCount !== null && selectedCount > 0 && <p>{selectedCount} Files Selected </p>}
 
 
-          {selectedForDeletionCount && <p>Files Selected  </p>}
+            {selectedForDeletionCount && <p>Files Selected  </p>}
 
+          </div>
+
+
+          <div className='navbar-end overflow-clip'>
+            {selectedImages.some((image) => image.selected) && (
+              <button className='btn w-fit bg-white text-red-500 hover:bg-red-800 hover:text-white' onClick={deleteSelectedImages}>
+                Delete Files</button>
+            )}
+            {dates.some((picture) => picture.selected) && (
+              <button className='btn  w-fit bg-white text-red-500 hover:bg-red-800 hover:text-white' onClick={selectAndDeleteImagesFromDates}>
+                Delete Files
+              </button>
+            )}
+          </div>
         </div>
 
 
-        <div className='navbar-end overflow-clip'>
-          {selectedImages.some((image) => image.selected) && (
-            <button className='btn w-fit bg-white text-red-500 hover:bg-red-800 hover:text-white' onClick={deleteSelectedImages}>
-              Delete Files</button>
-          )}
-          {dates.some((picture) => picture.selected) && (
-            <button className='btn  w-fit bg-white text-red-500 hover:bg-red-800 hover:text-white' onClick={selectAndDeleteImagesFromDates}>
-              Delete Files
-            </button>
-          )}
+
+        <div className="navbar-start">
+          <div className="dropdown">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden sm:flex-shrink">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+            </label>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <div className='navbar-end overflow-clip'>
+                {selectedImages.some((image) => image.selected) && (
+                  <button className='btn w-fit bg-white text-red-500 hover:bg-red-800 hover:text-white' onClick={deleteSelectedImages}>
+                    Delete Files</button>
+                )}
+                {dates.some((picture) => picture.selected) && (
+                  <button className='btn  w-fit bg-white text-red-500 hover:bg-red-800 hover:text-white' onClick={selectAndDeleteImagesFromDates}>
+                    Delete Files
+                  </button>
+                )}
+              </div>
+            </ul>
+          </div>
+          
         </div>
       </div>
 
@@ -175,7 +202,7 @@ function App() {
               transition: 'transform 0.3s, box-shadow 0.3s', // Add transitions for smooth effects
               transform: `scale(${draggedImage === image ? 1.1 : 1})`, // Apply scale transformation
               boxShadow: draggedImage === image ? '0px 10px 20px rgba(0, 0, 0, 0.2)' : '0px 0px 0px rgba(0, 0, 0, 0)', // Apply drop shadow
-           
+
 
             }}
             draggable
@@ -194,7 +221,7 @@ function App() {
               type="checkbox"
               checked={image.selected}
               onChange={() => toggleImageSelection(index)}
-              className="absolute top-2 right-2 hidden group-hover:block cursor-pointer"
+              className="absolute top-2 left-2 hidden group-hover:block cursor-pointer"
             />
           </div>
         ))}
@@ -203,7 +230,7 @@ function App() {
           <div
             key={picture.id}
 
-            className={`relative rounded-md group cursor-pointer ${picture.selected ? 'bg-white' : 'bg-white'} `}
+            className={`relative sm:w-max rounded-md group cursor-pointer ${picture.selected ? 'bg-white' : 'bg-white'} `}
             style={{
               marginTop: '10px',
               width: '150px',
@@ -234,7 +261,7 @@ function App() {
               type="checkbox"
               checked={picture.selected}
               onChange={() => handleImageSelection(picture)}
-              className="absolute top-2 right-2 z-10 cursor-pointer"
+              className="absolute top-2 left-2 z-10 cursor-pointer"
             />
           </div>
         ))}
